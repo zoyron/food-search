@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Axios from "axios";
 import Recipe from "./components/Recipe";
+import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
   const [foodName, setFoodName] = useState("");
@@ -13,7 +14,6 @@ const App = () => {
     console.clear();
     const response = await Axios.get(url);
     setRecipes(response.data.hits);
-    console.log(recipes);
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -37,8 +37,9 @@ const App = () => {
         />
         <input type="submit" value="search" />
       </form>
-      <div className="recipies">
-        {recipes !== [] && recipes.map((recipe) => <Recipe recipe={recipe} />)}
+      <div className="recipes">
+        {recipes !== [] &&
+          recipes.map((recipe) => <Recipe key={uuidv4()} recipe={recipe} />)}
       </div>
     </div>
   );
